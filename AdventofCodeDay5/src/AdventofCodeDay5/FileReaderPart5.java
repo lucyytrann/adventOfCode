@@ -1,4 +1,4 @@
-package AdventofCodeDay3;
+package AdventofCodeDay5;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FileReaderPart4 {
+public class FileReaderPart5 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -19,6 +19,7 @@ public class FileReaderPart4 {
         Pattern regex = Pattern.compile(pattern);
         
         ArrayList<Integer> results = new ArrayList<>();
+        boolean isEnabled = true;
 		
 		try{
 			File file = new File("input5");
@@ -29,6 +30,13 @@ public class FileReaderPart4 {
 				//grab 1 line
 				String line = scanner.nextLine();
 				
+				//check for do() and don't()
+				if (line.contains("do()")) {
+                    isEnabled = true; // Enable mul instructions
+                } else if (line.contains("don't()")) {
+                    isEnabled = false; // Disable mul instructions
+                }
+				
 				//Match the regex pattern in the line
                 Matcher matcher = regex.matcher(line);
 				
@@ -38,7 +46,9 @@ public class FileReaderPart4 {
                     int y = Integer.parseInt(matcher.group(2));
 
                     // Perform multiplication and add to results
-                    results.add(x * y);
+                    if (isEnabled) {
+                        results.add(x * y);
+                    }
                 }
 			}
 			
